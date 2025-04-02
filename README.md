@@ -2,7 +2,7 @@
 Saitek / Logitech FIP (Flight Instrument Panel) display driver for Linux
 
 # Driver
-This is an attempt to reverse engineer Saitek / Logitech driver for Windows which is not a real driver but more a software that drivers display directly by USB commands via BULK.
+This is an attempt to reverse engineer Saitek / Logitech FIP (Flight Instrument Panel) driver for Windows which is not a real driver but more a software that drive display directly by USB commands via BULK commands.
 Saitek FIP is using few endpoints
 
 # What I've achieve until now
