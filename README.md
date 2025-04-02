@@ -14,7 +14,7 @@ These details are used by the future driver to be able to send data correctly to
 5. Send initialization command to the device on Endpoint OUT (0x02): 00000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000
 6. Read the reply from device by sending 0 bytes data to Endpoint IN (0x82). Device should reply with: 00000000000000000000000001000000000000000000000a0000000000000000000000000000000200000000
 7. Send command which enables image receiving on Endpoint OUT (0x02): 0000000000000001000384000000000000000000000000060000000000000000000000000000000000000000
-8. Send a RGB 24bit BMP image without BMP headers to device in chucks of 512 bytes.
+8. Send a RGB 24-bit BMP image without BMP headers to device in chucks of 512 bytes.
 9. Device is receiving the image and it shows it correctly.
 
 # What I found until now
@@ -31,7 +31,7 @@ As I'm writing this document what is doing DirectOutputService.exe when you plug
   c. Reads initialization done from device by reading data from Endpoint 0x81.
   d. Device must reply on Endpoint 0x81: 00000000000000000000000001000000000000000000000a0000000000000000000000000000000200000000
   e. DirectOutputService.exe is sending to device on endpoint 0x02 image receiving: 0000000000000001000384000000000000000000000000060000000000000000000000000000000000000000
-  d. DirectOutputService.exe is sending a BMP RGB 8bit image to device in chunks of 512 bytes. The BMP image is just the RAW image without header.
+  d. DirectOutputService.exe is sending a BMP RGB 8bit image to device in chunks of 512 bytes. The BMP image is just the BMP image without header.
 
 3. DLL has these functions defined:
 ```
