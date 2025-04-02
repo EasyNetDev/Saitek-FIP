@@ -9,10 +9,12 @@ Saitek FIP is using few endpoints
 1. Build first attempt of driver using libusb https://libusb.info/
 2. Search for USB device 0x06a3:0xa2ae .
 3. Open USB device.
-4. Send initialization command to the device.
-5. Send command which enables image receiving.
-6. Send BMP image to device.
-7. Device is receiving the image and it shows it correctly.
+4. Get device information, like bEndpointAddress for Endpoint OUT, bEndpointAddress Endpoint IN, wMaxPacketSize for each endpoint (normaly 512 bytes).
+These details are used by the future driver to be able to send data correctly to the device.
+5. Send initialization command to the device.
+6. Send command which enables image receiving.
+7. Send a RGB 24bit BMP image without BMP headers to device in chucks of 512 bytes.
+8. Device is receiving the image and it shows it correctly.
 
 # What I found until now
 DirectOutput (which doesn't have anything to do with DirectX) has some functions. 
