@@ -11,10 +11,11 @@ Saitek FIP is using few endpoints
 3. Open USB device.
 4. Get device information, like bEndpointAddress for Endpoint OUT (0x02), bEndpointAddress Endpoint IN (0x82), wMaxPacketSize for each endpoint (normaly 512 bytes).
 These details are used by the future driver to be able to send data correctly to the device.
-5. Send initialization command to the device.
-6. Send command which enables image receiving.
-7. Send a RGB 24bit BMP image without BMP headers to device in chucks of 512 bytes.
-8. Device is receiving the image and it shows it correctly.
+5. Send initialization command to the device on Endpoint OUT (0x02): 00000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000
+6. Read the reply from device by sending 0 bytes data to Endpoint IN (0x82). Device should reply with: 00000000000000000000000001000000000000000000000a0000000000000000000000000000000200000000
+7. Send command which enables image receiving on Endpoint OUT (0x02): 0000000000000001000384000000000000000000000000060000000000000000000000000000000000000000
+8. Send a RGB 24bit BMP image without BMP headers to device in chucks of 512 bytes.
+9. Device is receiving the image and it shows it correctly.
 
 # What I found until now
 DirectOutput (which doesn't have anything to do with DirectX) has some functions. 
@@ -25,14 +26,14 @@ So this is how the driver under Windows is working:
 1. DirectOutputService.exe is used to communicate via USB with the device.
 This service is receiving requests from plugins or other softwares via DirectOutput.dll and is creating the specific USB packet and is sending to the device
 As I'm writing this document what is doing DirectOutputService.exe when you plugin the FIP:
-  a. Searching for any USB device 0x06a3:0xa2ae.
-  b. Sends initialization command to EndPoint 0x02: 00000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000
+  a. Searches for any USB device 0x06a3:0xa2ae.
+  b. Sends initialization command to EndPoint OUT 0x02: 00000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000
   c. Reads initialization done from device by reading data from Endpoint 0x81.
   d. Device must reply on Endpoint 0x81: 00000000000000000000000001000000000000000000000a0000000000000000000000000000000200000000
   e. DirectOutputService.exe is sending to device on endpoint 0x02 image receiving: 0000000000000001000384000000000000000000000000060000000000000000000000000000000000000000
   d. DirectOutputService.exe is sending a BMP RGB 8bit image to device in chunks of 512 bytes. The BMP image is just the RAW image without header.
 
-2. DLL has these functions defined:
+3. DLL has these functions defined:
 ```
 // HRESULT DirectOutput_Initialize(const wchar_t* wszPluginName);
 // HRESULT DirectOutput_Deinitialize();
