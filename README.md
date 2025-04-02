@@ -16,6 +16,7 @@ These details are used by the future driver to be able to send data correctly to
 7. Send command which enables image receiving on Endpoint OUT (0x02): 0000000000000001000384000000000000000000000000060000000000000000000000000000000000000000
 8. Send a RGB 24-bit BMP image without BMP headers to device in chucks of 512 bytes.
 9. Device is receiving the image and it shows it correctly.
+10. After each image you send we need to read the reply from device by sending 0 bytes data to Endpoint IN (0x82). Device should reply with: 0000000000000001000000000000000000000000000000060000000000000000000000000000000000000000
 
 # What I found until now
 DirectOutput (which doesn't have anything to do with DirectX) has some functions. 
