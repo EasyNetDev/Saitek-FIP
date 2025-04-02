@@ -9,7 +9,7 @@ Saitek FIP is using few endpoints
 1. Build first attempt of driver using libusb https://libusb.info/
 2. Search for USB device 0x06a3:0xa2ae .
 3. Open USB device.
-4. Get device information, like bEndpointAddress for Endpoint OUT, bEndpointAddress Endpoint IN, wMaxPacketSize for each endpoint (normaly 512 bytes).
+4. Get device information, like bEndpointAddress for Endpoint OUT (0x02), bEndpointAddress Endpoint IN (0x82), wMaxPacketSize for each endpoint (normaly 512 bytes).
 These details are used by the future driver to be able to send data correctly to the device.
 5. Send initialization command to the device.
 6. Send command which enables image receiving.
@@ -71,4 +71,5 @@ Size: 320 x 240 pixels
 Description: Display an image on the FIP, data passed must be 24bpp RGB. The buffer size must be 320*240*3 = 230400 bytes. It is common to use the Bitmap image format for the FIP becuase the image data section of a 24bpp RGB Bipmap file conforms to the FIP buffer requirements. See Set_Image and Set_ImageFromFile for details on how to send images to the FIP.
 ```
 
-From help the driver or display supports multiple pages. I'm not sure if is integrated in the display itself or is a feature from DirectOutput.dll / DirectOutputService.exe . I have to do some reverse engineering for this.
+1. From help the driver or display supports multiple pages. I'm not sure if is integrated in the display itself or is a feature from DirectOutput.dll / DirectOutputService.exe . I have to do some reverse engineering for this.
+2. Build some programs under Windows using DirectOutput.h and try to make some scenarios and capture the USB traffic to see different functions which are send to device, like  SetLed, SetString, AddPage, RemovePage, StartServer, CloseServer, SendServerMsg, etc.
