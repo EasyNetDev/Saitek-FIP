@@ -70,6 +70,10 @@ These details are used by the future driver to be able to send data correctly to
 9. Send a RGB 24-bit BMP image without BMP headers to device in chucks of 512 bytes.
 10. Device is receiving the image and it shows it correctly.
 11. After each image you send we need to read the reply from device by sending 0 bytes data to Endpoint IN (0x82). Device should reply with: 0000000000000001000000000000000000000000000000060000000000000000000000000000000000000000
+12. The result is this:
+![Alt text](/Demo%20Image.jpg?raw=true "First custom image uploaded")
+
+
 
 # What next?
 If we want to write a driver we need to write also a library which communicates with the driver and to write plugins for simulators like X-Plane 12 for Linux or even MacOS.
