@@ -19,7 +19,8 @@ These details are used by the future driver to be able to send data correctly to
 10. After each image you send we need to read the reply from device by sending 0 bytes data to Endpoint IN (0x82). Device should reply with: 0000000000000001000000000000000000000000000000060000000000000000000000000000000000000000
 
 # What I found until now
-DirectOutput (which doesn't have anything to do with DirectX) has some functions. 
+DirectOutput (which doesn't have anything to do with DirectX) has some functions to control the device.
+I believe the plugin itself must compute the image before is calling DirectOutput_SetImage() function. This what I'm trying to achieve now in Linux by using a PNG or JPG image, create a raw image buffer and send it to the device.
 If you extract Flight_Instrument_Panel_x64_Drivers_8.0.150.0.exe from https://support.logi.com/hc/en-ch/articles/360024848713--Downloads-Flight-Instrument-Panel under MSI you will find DirectOutput_x64_Release.msi . 
 This installer will install DirectOutput service (DirectOutputService.exe) and a DLL + .h header: DirectOutput.dll, DirectOutput.h.
 
