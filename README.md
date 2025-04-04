@@ -2,7 +2,7 @@
 Saitek / Logitech FIP (Flight Instrument Panel) display driver for Linux
 
 # Short story
-I have a Saitek / Logitech FIP laying on my desk from the moment I moved completly to Linux. I realy like this small device to use it as PFD when I'm flying with A320/A321.
+I have a Saitek / Logitech FIP laying on my desk and collecting dust from the moment I moved completly to Linux. I realy like this small device to use it as PFD when I'm flying with A320/A321.
 
 But looking to the driver for Windows, even these drivers are not updated at all from 2018:
 ```
