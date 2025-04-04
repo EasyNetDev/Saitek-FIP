@@ -104,9 +104,9 @@ These details are used by the future driver to be able to send data correctly to
 
 # What next?
 If we want to write a driver we need to write also a library which communicates with the driver and to write plugins for simulators like X-Plane 12 for Linux or even MacOS.
-This driver must have all functions found on DirectOutputService.exe .
+Eventually this driver perheps should have all functions found on DirectOutputService.exe? I have no clue if I will use the same approach as DirectOutput.dll or I will use a completely differnet APIs.
 
-Looking at the functions in DirectOutput.dll, I need to reverse engineering device AddPage, RemovePage, SetString, SetLed and also other functions.\
+Looking at the functions in DirectOutput.dll, I need to reverse engineering device AddPage, RemovePage, SetString, SetLed and also other functions. AddPage / RemovePage I don't know at this moment if is a device feature or is just a feature in DirectOutput.exe .
 
 From documentation found in DirectOutput: 
 ```
