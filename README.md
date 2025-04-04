@@ -2,7 +2,7 @@
 Saitek / Logitech FIP (Flight Instrument Panel) display driver for Linux
 
 # Short story
-I have a Saitek / Logitech FIP laying on my desk and collecting dust from the moment I moved completly to Linux. I realy like this small device to use it as PFD when I'm flying with A320/A321.
+I have a Saitek / Logitech FIP laying on my desk and collecting dust from the moment I moved completely to Linux. I realy like this small device to use it as PFD when I'm flying with A320/A321.
 
 But looking to the driver for Windows, even these drivers are not updated at all from 2018:
 ```
@@ -12,7 +12,7 @@ OS: Windows 8, Windows 7, Windows 10
 File Size: 3.0 MB
 ```
 
-Plus if you want to use it under X-Plane 12, you don't have a plugin! "Thank you" Logitech for your "awesome" support for these devices.
+Plus if you want to use it under X-Plane 12, you don't have a plugin!
 
 Taking a look to this page https://support.logi.com/hc/en-ch/articles/360023347393-Mac-support-for-Saitek-devices shows that even Radio / Switch / Multi Panels are not compatible.
 
@@ -22,12 +22,12 @@ But of course is a simple and laizy answer becasue their development department 
 
 Seeing the project for Xsaitekpanels I decided to take a look how FIP is working under Windows and reverse engineering the protocol. And YES, the device is 100% compatible with all OSes if you have the commands to send the image to device!
 
-I've tried to contact Logitech to support my work to have a documentation for the protocol, but I'm pretty sure that I will receive the same laizy answer: is not supported (why bother us with such thinks when we are not able to build an XP12 plugin for Windows?).
+I'm in contact with Logitech to check if they could support my work to have a documentation for the protocol. I hope I will get some support from their side to be able to implement the full protocol and not just reverse engineering what I can.
 
 # Driver
-This is an attempt to reverse engineer Saitek / Logitech FIP (Flight Instrument Panel) driver for Windows which is not a real driver but more a software that drives display directly by USB commands via BULK commands.
+This is first step of the attempt to reverse engineer Saitek / Logitech FIP (Flight Instrument Panel) driver for Windows which is not a real driver but more a software that drives display directly by USB commands via BULK commands.
 
-Saitek FIP is using few endpoints to comumicate between host and itself: Endpoint OUT 0x02 and Endpoint IN 0x82.
+Saitek FIP is using few endpoints to comumicate between host and itself, like: Endpoint OUT 0x02 and Endpoint IN 0x82.
 
 Endpoint OUT is used by the host to send commands and data towards device and Endpoint IN is used by host to receive data from device.
 
@@ -83,7 +83,7 @@ Of course there are some other commands which I will document later but I need t
 3. Any plugin for simulators is computing an image and is using functions from DirectOutput.dll, like DirectOutput_SetImage() to send image to the device. The data  sending data via DirectOutputService.exe which is communicats directly with the USB.
 
 
-# What I've achieve until now
+# Status of the driver
 1. Capture USB traffic from DirectOutput.exe driver and analyse it.
 2. Extract the image packets form USB and remove USB headers from the packets. I've selected all packets which have image, save them in Wireshark and I used tshark to remove the USB header.
 2. Build first attempt of driver using libusb https://libusb.info/
@@ -99,7 +99,9 @@ These details are used by the future driver to be able to send data correctly to
 11. After each image you send we need to read the reply from device by sending 0 bytes data to Endpoint IN (0x82). Device should reply with: 0000000000000001000000000000000000000000000000060000000000000000000000000000000000000000
 12. The result is this:
 ![Alt text](/Demo%20Image.jpg?raw=true "First custom image uploaded")
-
+12. I'm adding functions to enumerate all FIP devices in the system.
+13. Create a thread to keep USB events and add/remove FIP from the driver.
+14. Create communication outside of the driver for a future lib to be able to send data to the driver. 
 
 
 # What next?
