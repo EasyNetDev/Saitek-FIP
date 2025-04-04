@@ -12,7 +12,7 @@ OS: Windows 8, Windows 7, Windows 10
 File Size: 3.0 MB
 ```
 
-Plus if you want to use it under X-Plane 12, you don't have a plug in! "Thank you" Logitech for your "awesome" support for these devices.
+Plus if you want to use it under X-Plane 12, you don't have a plugin! "Thank you" Logitech for your "awesome" support for these devices.
 
 Taking a look to this page https://support.logi.com/hc/en-ch/articles/360023347393-Mac-support-for-Saitek-devices shows that even Radio / Switch / Multi Panels are not compatible.
 
