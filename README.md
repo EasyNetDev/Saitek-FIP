@@ -1,16 +1,40 @@
 # Saitek-FIP
 Saitek / Logitech FIP (Flight Instrument Panel) display driver for Linux
 
+# Short story
+I have a Saitek / Logitech FIP laying on my desk from the moment I moved completly to Linux. I realy like this small device to use it as PFD when I'm flying with A320/A321.
+
+But looking to the driver for Windows, even these drivers are not updated at all from 2018:
+```
+Software Version: 8.0.150.0
+Last Update: 2018-04-13
+OS: Windows 8, Windows 7, Windows 10
+File Size: 3.0 MB
+```
+
+Plus if you want to use it under X-Plane 12, you don't have a plug in! "Thank you" Logitech for your "awesome" support for these devices.
+
+Taking a look to this page https://support.logi.com/hc/en-ch/articles/360023347393-Mac-support-for-Saitek-devices shows that even Radio / Switch / Multi Panels are not compatible.
+
+But using this plugin for XP12 https://github.com/sparker256/xsaitekpanels I was able to use the panels without any issues. So if you ask Logitech how can you use the panels under Linux / MacOS they will answer you: are not supported.
+
+But of course is a simple and laizy answer becasue their development department is not capable to update their driver for Windows 11 and you have to use Windows 10 version or to build a driver for XP12.
+
+Seeing the project for Xsaitekpanels I decided to take a look how FIP is working under Windows and reverse engineering the protocol. And YES, the device is 100% compatible with all OSes if you have the commands to send the image to device!
+
+I've tried to contact Logitech to support my work to have a documentation for the protocol, but I'm pretty sure that I will receive the same laizy answer: is not supported (why bother us with such thinks when we are not able to build an XP12 plugin for Windows?).
+
 # Driver
-This is an attempt to reverse engineer Saitek / Logitech FIP (Flight Instrument Panel) driver for Windows which is not a real driver but more a software that drive display directly by USB commands via BULK commands.
+This is an attempt to reverse engineer Saitek / Logitech FIP (Flight Instrument Panel) driver for Windows which is not a real driver but more a software that drives display directly by USB commands via BULK commands.
 
 Saitek FIP is using few endpoints to comumicate between host and itself: Endpoint OUT 0x02 and Endpoint IN 0x82.
 
 Endpoint OUT is used by the host to send commands and data towards device and Endpoint IN is used by host to receive data from device.
-# What I found until now
-DirectOutput (which doesn't have anything to do with DirectX) has some functions to control the device.
 
-I believe the plugin itself must compute the image before is calling DirectOutput_SetImage() function. This what I'm trying to achieve now in Linux by using a PNG or JPG image, create a raw image buffer and send it to the device.
+# What I found until now
+DirectOutput (which doesn't have anything to do with DirectX) has some functions to control the device. Is just sends BULK USB commands via the Endpoints to send and read data from the device.
+
+The plugin for MSFS2020 must compute the image and decides if there is any update to the image before is calling DirectOutput_SetImage() function. At this moment I was able to use a 320x240 PNG image under Linux, I create a raw image buffer and I send it to the device (see image below).
 
 If you extract Flight_Instrument_Panel_x64_Drivers_8.0.150.0.exe from https://support.logi.com/hc/en-ch/articles/360024848713--Downloads-Flight-Instrument-Panel under MSI you will find DirectOutput_x64_Release.msi . 
 
@@ -26,6 +50,9 @@ As I'm writing this document what is doing DirectOutputService.exe when you plug
   d. Device must reply on Endpoint 0x81: 00000000000000000000000001000000000000000000000a0000000000000000000000000000000200000000
   e. DirectOutputService.exe is sending to device on endpoint 0x02 image receiving: 0000000000000001000384000000000000000000000000060000000000000000000000000000000000000000
   d. DirectOutputService.exe is sending a BMP RGB 8bit image to device in chunks of 512 bytes. The BMP image is just the BMP image without header.
+  f. Deinitilialize the device. (I need to figure out what the commands are and their sequence).
+
+Of course there are some other commands which I will document later but I need to understand them. Some of them are used to deinitilize the device before is used by something else. Otherwise the device will refuse to answer to the commands after a while.
 
 3. DLL has these functions defined:
 ```
