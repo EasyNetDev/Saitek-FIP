@@ -122,3 +122,15 @@ Description: Display an image on the FIP, data passed must be 24bpp RGB. The buf
 3. Implement first functions in the service and library to communicate from a user program to the device.
 4. Build first plugin for XP12 on Linux.
 5. Use the device for different usage, not only for simulators.
+
+# Progress
+The driver I've started to build is in this stage:
+1. I've created the hotplug USB event
+2. When a new device is already present or is detected in the system is added to a list
+3. An update function is called and is gattering the needed information from the device: serial Number, Bulk interface, Bulk Endpoints In/Out, Bulk Endpoints maximum packet size.
+4. When a device is removed from system si removed from list.
+
+# Todo
+1. After each device is detected I need to run the initialization of the FIP.
+2. Then send a list of images to the device
+3. Create a socket and an API for the library to be able to communicate with the driver
