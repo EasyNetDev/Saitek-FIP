@@ -103,6 +103,9 @@ These details are used by the future driver to be able to send data correctly to
 13. Create a thread to keep USB events and add/remove FIP from the driver.
 14. Create communication outside of the driver for a future lib to be able to send data to the driver. 
 
+At this moment the driver is able to initiliaze the device and send first images to FIP.
+A preview video you can find it here:
+https://youtu.be/Njzi5Fmo44s
 
 # What next?
 If we want to write a driver we need to write also a library which communicates with the driver and to write plugins for simulators like X-Plane 12 for Linux or even MacOS.
@@ -125,10 +128,10 @@ Description: Display an image on the FIP, data passed must be 24bpp RGB. The buf
 
 # Progress
 The driver I've started to build is in this stage:
-1. I've created the hotplug USB event
-2. When a new device is already present or is detected in the system is added to a list
-3. An update function is called and is gattering the needed information from the device: serial Number, Bulk interface, Bulk Endpoints In/Out, Bulk Endpoints maximum packet size.
-4. When a device is removed from system si removed from list.
+1. I've created the hotplug USB event - done
+2. When a new device is already present or is detected in the system is added to a list - done
+3. An update function is called and is gattering the needed information from the device: serial Number, Bulk interface, Bulk Endpoints In/Out, Bulk Endpoints maximum packet size. - done
+4. When a device is removed from system si removed from list. - done
 
 # Todo
 1. After each device is detected I need to run the initialization of the FIP.
